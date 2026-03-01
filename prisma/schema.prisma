@@ -1,0 +1,117 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── Enums ───────────────────────────────────────────────
+
+enum CareerStatus {
+  ACTIVE
+  PAUSED
+}
+
+enum EmploymentType {
+  FULL_TIME
+  PART_TIME
+  CONTRACT
+  INTERNSHIP
+}
+
+enum ProjectStatus {
+  LIVE
+  IN_PROGRESS
+  REVIEW
+  COMPLETED
+}
+
+enum MemberStatus {
+  ONLINE
+  AWAY
+  OFFLINE
+}
+
+enum TestimonialStatus {
+  VERIFIED
+  PENDING
+}
+
+// ─── Models ──────────────────────────────────────────────
+
+model Career {
+  id             String         @id @default(uuid())
+  title          String
+  category       String
+  employmentType EmploymentType
+  description    String
+  status         CareerStatus   @default(ACTIVE)
+  active         Boolean        @default(true)
+  icon           String         @default("terminal")
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  @@map("careers")
+}
+
+model Project {
+  id          String        @id @default(uuid())
+  title       String
+  description String
+  category    String
+  url         String?
+  tags        String[]
+  status      ProjectStatus @default(IN_PROGRESS)
+  coverImage  String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  members ProjectMember[]
+
+  @@map("projects")
+}
+
+model ProjectMember {
+  id        String  @id @default(uuid())
+  name      String
+  initials  String
+  bgColor   String  @default("#6366f1")
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@map("project_members")
+}
+
+model TeamMember {
+  id         String       @id @default(uuid())
+  name       String
+  role       String
+  department String
+  status     MemberStatus @default(OFFLINE)
+  isLead     Boolean      @default(false)
+  avatarUrl  String?
+  linkedin   String?
+  github     String?
+  twitter    String?
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+
+  @@map("team_members")
+}
+
+model Testimonial {
+  id        String            @id @default(uuid())
+  name      String
+  role      String
+  company   String
+  rating    Int               @default(5)
+  review    String
+  status    TestimonialStatus @default(PENDING)
+  avatarUrl String?
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+
+  @@map("testimonials")
+}
