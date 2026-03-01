@@ -1,6 +1,6 @@
 import { IsString, IsEnum, IsBoolean, IsOptional } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { CareerStatus, EmploymentType } from '@prisma/client';
+import { CareerStatus, EmploymentType } from '../../../generated/prisma/enums';
 
 export class CreateCareerDto {
   @ApiProperty({ example: 'Senior Frontend Developer' })

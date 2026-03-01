@@ -7,7 +7,7 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { ProjectStatus } from '@prisma/client';
+import { ProjectStatus } from '../../../generated/prisma/enums';
 
 export class ProjectMemberDto {
   @ApiProperty({ example: 'John Doe' })

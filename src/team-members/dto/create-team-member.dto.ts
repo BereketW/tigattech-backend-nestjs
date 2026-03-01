@@ -1,6 +1,6 @@
 import { IsString, IsEnum, IsBoolean, IsOptional } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { MemberStatus } from '@prisma/client';
+import { MemberStatus } from '../../../generated/prisma/enums';
 
 export class CreateTeamMemberDto {
   @ApiProperty({ example: 'Alexandra Deff' })
